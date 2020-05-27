@@ -306,10 +306,9 @@ function viewHelpRequests() {
 }
 
 /* Offer Help Confirm */
-function offerHelpConfirm() {
+function offerHelpConfirm(helpID) {
   removeAlertBox();
   removeButtons();
-  var helpID = inputs.value;
   inputs.style.display = "none";
   if (isNaN(helpID)) {
     makeAlertBox("Invalid request.");
