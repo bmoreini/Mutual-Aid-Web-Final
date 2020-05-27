@@ -5,8 +5,53 @@
     <meta name="viewport" content="width=device-width">
     <title>repl.it</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
+    <script src="globalVariables.js"></script>
     <script src="script.js"></script>
+    <script src="webHelper.js"></script>
+    <script src="filesaver.js"></script>
+    <script src="mutual-aid-alerts.js"></script>
+  </head>
+  <body onload="displayWebMenu()">
+    <h1>Mutual Aid Site</h1>
+    <div id="nav">
+      <div id="navbar">
+      </div>
+    </div>
+    <div id="input-area">
+      <div id="instructions">
+      </div>
+      <textArea id="inputs">
+      </textArea>
+    </div>
+    <div id="button-area">
+    </div>
+    <div id="alert-area">
+    </div>
+    <script>
+      var navbar = document.getElementById("navbar");
+      var inputArea = document.getElementById("input-area");
+      var instructions = document.getElementById("instructions");
+      var inputs = document.getElementById("inputs");
+      var buttonArea = document.getElementById("button-area");
+      var alertArea = document.getElementById("alert-area");
+      var playButton = document.getElementById("play");
+      var oldButton = document.getElementById("oldSystem");
+      var alertBox = document.createElement("dialog");
+      var spaceNum = 10;
+      var person = null;
+      var counter = 0;
+      var currentUser = [null, null, null];
+      var pID = null;
+      // Requests include personID, need, quantity, priority, date entered, date met, helperID
+      var personArray = [];
+      var helpRequest = [null, null, null, null, null, null, null];
+      var counter = 0;
+      var listeners = [];
+      var needs = ["Shopping", "Grocery delivery", "Medical supplies", "Meal delivery", "Meal making", "Child care/aid", "Wellness checks", "Mental health support", "Financial support"];
+      // for testing
+      var persons = [["1-0008675309", "Bob", "Walter", "bob@yahoo.com", "0008675309", "Burlington"],["2-8357502412", "Napoleon", "Dynamite", "therose@yahoo.com", "8357502412", "Williston"]];
+      var helpRequests = [["1-0008675309", "Toilet Paper", "5", "1", "3/2/20", null, null], ["2-8357502412", "Steaks", "3", "2", "3/2/20", null, null]];
+      var webMenuItems = [["Load Data", quit], ["Log In", logInSetup], ["Add Person", addPersonConfirm], ["View Needs", viewNeeds], ["Add Need", addNeedSetUp], ["Request Help", requestHelpQuantity], ["Offer Help", viewHelpRequests], ["View Met Requests", viewMetRequests], ["Log Out", logOut], ["Save Data", saveData], ["Quit", quit]];
+    </script>
   </body>
 </html>

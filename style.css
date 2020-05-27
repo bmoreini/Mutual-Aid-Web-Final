@@ -1,0 +1,43 @@
+#play {
+  margin-top:10px;
+  display:block;
+}
+
+#inputs, #instructions {
+  width:90%;
+}
+
+#inputs {
+  background-color:beige;
+}
+
+#instructions {
+  font-size:-2;
+  border: 1px solid gray;
+}
+
+#input-area {
+  display:block;
+}
+
+#button-area button{
+  display:inline;
+  margin:0 10px;
+}
+
+#alertBox {
+  margin-top:10px;
+  height:100px;
+  width:50%;
+  padding:20px;
+  /*position:absolute;*/
+}
+
+#alertBox button {
+  height:20px;
+  width:20%;
+}
+
+table#results td {
+  padding:0 10px;
+}
