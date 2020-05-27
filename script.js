@@ -286,8 +286,8 @@ function viewHelpRequests() {
   for (var i = 1; i <= helpRequests.length; i++) {
     if (helpRequests[i - 1][5] == null) {
       helpRequestsMenu += "<tr>";
-      helpRequestsMenu += "<td><button type=\"submit\" onclick=\"offerHelpConfirm("+i+")\">"+ findName(helpRequests[i - 1][0]) + "</button></td>";
-      //helpRequestsMenu += "<td>" + findName(helpRequests[i - 1][0]) + "</td>";
+      helpRequestsMenu += "<td><button type=\"submit\" onclick=\"offerHelpConfirm("+i+")\">Pick</button>";
+      helpRequestsMenu += findName(helpRequests[i - 1][0]) + "</td>";
       helpRequestsMenu += "<td>" + findTown(helpRequests[i - 1][0]) + "</td>";
       helpRequestsMenu += "<td>" + helpRequests[i - 1][3] + "</td>";
       helpRequestsMenu += "<td>" + helpRequests[i - 1][2] + "</td>";
