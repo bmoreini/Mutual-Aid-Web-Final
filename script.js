@@ -286,7 +286,8 @@ function viewHelpRequests() {
   for (var i = 1; i <= helpRequests.length; i++) {
     if (helpRequests[i - 1][5] == null) {
       helpRequestsMenu += "<tr>";
-      helpRequestsMenu += "<td>" + findName(helpRequests[i - 1][0]) + "</td>";
+      helpRequestsMenu += "<td><button type=\"submit\" onclick=\"offerHelpConfirm("+i+")\">"+ findName(helpRequests[i - 1][0]) + "</button></td>";
+      //helpRequestsMenu += "<td>" + findName(helpRequests[i - 1][0]) + "</td>";
       helpRequestsMenu += "<td>" + findTown(helpRequests[i - 1][0]) + "</td>";
       helpRequestsMenu += "<td>" + helpRequests[i - 1][3] + "</td>";
       helpRequestsMenu += "<td>" + helpRequests[i - 1][2] + "</td>";
@@ -298,9 +299,9 @@ function viewHelpRequests() {
     }
   }
   helpRequestsMenu += "</table>";
-  helpRequestsMenu += "<p>Enter the number of the request you would like to meet and click offer help or click return to menu</p>";
+  helpRequestsMenu += "<p>Click the name of the person to whom you would like to offer help</p>";
   newDiv("results-table", "button-area", helpRequestsMenu);
-  questionButton(playButton, "Offer Help", offerHelpConfirm, null, null);
+  //questionButton(playButton, "Offer Help", offerHelpConfirm, null, null);
   //instructions.style.display = "none";
 }
 
