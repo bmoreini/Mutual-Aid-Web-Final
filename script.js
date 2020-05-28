@@ -201,14 +201,17 @@ function addNeedSetUp() {
 
 /* Add Needs Validate */
 function addNeedValidate() {
+  removeButtons();
   let need = inputs.value;
   questionButton(playButton, "OK", addNeedValidate, null, null);
   if (validateNeedUnique(need) == true) {
+    removeButtons();
     needs.push(need);
     makeAlertBox("Your need, " + need + " was added with ID " + needs.length + "! You can select it from the menu now.");
     makeAlertButton("View Needs", viewNeeds);
   }
   else {
+    removeButtons();
     makeAlertBox("Invalid or duplicate entry. Try again. Enter the name of your need.");
     makeAlertButton("Add Need", addNeedSetup);
   }
@@ -259,15 +262,9 @@ function requestHelpPriority() {
 function requestHelpFinish() {
   removeButtons();
   helpRequest[3] = inputs.value;
-  //alert("Your priority for this request is "+helpRequest[3]);
-  questionButton(playButton, "Finish", finalizeHelp, null, "Your request has been added to our list.");
-}
-/* Request Help Finish */
-function finalizeHelp() {
   var today = new Date();
-  removeButtons();
   helpRequest[4] = today;
-  helpRequests.push(helpRequest);
+  makeAlertBox("Your request has been added");
 }
 
 /* View Help Requests
