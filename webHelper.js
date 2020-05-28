@@ -65,7 +65,6 @@ function makeAlertBox(message) {
 
 function makeAlertButton(message,clickAction){
   alertBox = document.getElementById("alertBox");
-  console.log("Alert Box = "+alertBox.innerHTML);
   let alertButton = document.createElement("BUTTON");
   alertButton.setAttribute("class", "alertButton");
   alertBox.appendChild(alertButton);
@@ -73,6 +72,36 @@ function makeAlertButton(message,clickAction){
   alertButton.addEventListener("click", clickAction);
   alertButton.addEventListener("click", removeAlertBox);
 }
+
+function makeAlertObject(message){
+  alertBox = document.getElementById("alertBox");
+  let alertButton = document.createElement("BUTTON");
+  alertButton.setAttribute("class", "alertButton");
+  alertButton.innerHTML = message;
+  alertButton.addEventListener("click", removeAlertBox);
+  return alertButton;
+}
+
+function makeAlertBoxParam(message, newListener, newParam) {
+  removeAlertBox();
+  alertBox = document.createElement("dialog");
+  alertBox.setAttribute("id", "alertBox");
+  alertBox.style.display = "block";
+  alertArea.append(alertBox);
+  let alertMsg = document.createElement("p");
+  alertMsg.innerHTML = message;
+  alertBox.appendChild(alertMsg);
+  let alertButton = makeAlertObject("OK",newListener);
+  if (newParam != null) {
+    alertButton.addEventListener("click", function () {
+      newListener(newParam);
+    }, false);
+  } else {
+    alertButton.addEventListener("click", newListener);
+  }
+  alertBox.appendChild(alertButton);
+}
+
 
 function removeAlertBox() {
   while(alertArea.hasChildNodes()){
