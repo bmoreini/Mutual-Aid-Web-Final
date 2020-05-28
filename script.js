@@ -267,9 +267,7 @@ function finalizeHelp() {
   var today = new Date();
   removeButtons();
   helpRequest[4] = today;
-  console.log("Current help request: " + helpRequest);
   helpRequests.push(helpRequest);
-  console.log("Help requests are now: " + helpRequests);
 }
 
 /* View Help Requests
@@ -318,8 +316,8 @@ function offerHelpConfirm(helpID) {
     if (helpID > 0 && helpID <= helpRequests.length) {
       helpID--;
       if (currentUser[0] != null) {
-        questionButton(playButton, "OK", completeHelpRequest, null, "You would like to help " + findName(helpRequests[helpID][0]) + " who placed a help request for " + helpRequests[helpID][1] + "?");
-        newButton("noButton", "Cancel", cleanKruft, null);
+       makeAlertBoxParam("You would like to help " + findName(helpRequests[helpID][0]) + " who placed a help request for " + helpRequests[helpID][1] + "?", completeHelpRequest, helpID);
+        makeAlertButton("Cancel", removeAlertBox);
       }
       else {
         makeAlertBox("You need to log in before meeting a help request");
@@ -334,11 +332,11 @@ function offerHelpConfirm(helpID) {
 }
 
 /* Complete Help Request */
-function completeHelpRequest() {
+function completeHelpRequest(helpID) {
   helpRequests[helpID][6] = currentUser[0];
   helpRequests[helpID][5] = new Date();
-  alert("You can contact " + findName(helpRequests[helpID][0]) + " with their Email " + findEmail(helpRequests[helpID][0]));
-  alert("Current Help Request: " + helpRequests[helpID]);
+  makeAlertBox("You can contact " + findName(helpRequests[helpID][0]) + " with their Email " + findEmail(helpRequests[helpID][0]));
+  makeAlertBox("Current Help Request: " + helpRequests[helpID]);
   helpRequests.push(helpID);;
 }
 
