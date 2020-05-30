@@ -47,7 +47,9 @@ function resetinputs() {
   * @return none
   */
 function logInSetup() {
+  inputArea.style.display="block";
   questionButton(playButton, "logIn", logIn, null, "Enter your ID in format #-10digitphone.");
+  inputs.style.display = "block";
   validpID = false;
 }
 
@@ -319,7 +321,7 @@ function offerHelpConfirm(helpID) {
       }
       else {
         makeAlertBox("You need to log in before meeting a help request");
-        makeAlertButton("Log In", logIn);
+        makeAlertButton("Log In", logInSetup);
       }
     }
     else {
@@ -367,13 +369,6 @@ function viewMetRequests() {
     }
     helpRequestsMenu += "</table>";
     newDiv("results-table", "button-area", helpRequestsMenu);
-  
-  /*var helpRequestsMenu = "**** Current Help We Can Meet ****\n";
-  for (var i = 1; i <= helpRequests.length; i++) {
-    if (helpRequests[i - 1][5] != null) {
-      helpRequestsMenu += i + "   -   " + findName(helpRequests[i - 1][0]) + " in " + findTown(helpRequests[i - 1][0]) + " placed a " + helpRequests[i - 1][3] + " priority ask for " + helpRequests[i - 1][2] + " " + helpRequests[i - 1][1] + " on " + helpRequests[i - 1][4] + " and it was met on " + helpRequests[i - 1][5] + "by " + helpRequests[i - 1][6] + ". \n";
-    }
-  }*/
 }
 
 /* This function finds the name of a person using their ID 
@@ -415,7 +410,7 @@ function findTown(pID) {
   *@return none;
   */
 function logOut() {
-  alert(currentUser[1] + " " + currentUser[2] + " is logged out.");
+  makeAlertBox(currentUser[1] + " " + currentUser[2] + " is logged out.");
   currentUser = [null, null, null];
   var helpRequest = [null, null, null, null, null, null, null];
 }
