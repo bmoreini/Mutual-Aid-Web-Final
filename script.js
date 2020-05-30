@@ -195,7 +195,8 @@ function viewNeedsChoice(needID) {
   * @return none
   */
 function addNeedSetUp() {
-  removeAlertBox();
+  inputArea.style.display="block";
+  removeButtons();
   questionButton(playButton, "Submit Need", addNeedValidate, null, "Enter your need, in as few words as possible. Example: not \"A donut\" but \"Donuts\"");
 }
 
