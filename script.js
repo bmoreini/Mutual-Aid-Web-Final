@@ -344,12 +344,36 @@ function completeHelpRequest(helpID) {
   * UPDATE-MBM
   */
 function viewMetRequests() {
-  var helpRequestsMenu = "**** Current Help We Can Meet ****\n";
+  inputArea.style.display="none";
+  var helpRequestsMenu = "<h3>Met Help Requests</h3>";
+  helpRequestsMenu += "<table id=\"results\"><tr><th>Name</th><th>Town</th><th>Priority</th><th>Quantity</th><th>Need</th><th>Date</th><th>Date Met</th><th>Met By</th></tr>";
+    for (var i = 1; i <= helpRequests.length; i++) {
+      if (helpRequests[i - 1][5] != null) {
+        helpRequestsMenu += "<tr>";
+        helpRequestsMenu += "<td>" + findName(helpRequests[i - 1][0]) + "</td>";
+        helpRequestsMenu += "<td>" + findTown(helpRequests[i - 1][0]) + "</td>";
+        helpRequestsMenu += "<td>" + helpRequests[i - 1][3] + "</td>";
+        helpRequestsMenu += "<td>" + helpRequests[i - 1][2] + "</td>";
+        helpRequestsMenu += "<td>" + helpRequests[i - 1][1] +
+          "</td>";
+        helpRequestsMenu += "<td>" + helpRequests[i - 1][4] +
+          "</td>";
+        helpRequestsMenu += "<td>" + helpRequests[i - 1][5] +
+          "</td>";
+        helpRequestsMenu += "<td>" + findName(helpRequests[i - 1][6]) +
+          "</td>";
+        helpRequestsMenu += "</tr>";
+      }
+    }
+    helpRequestsMenu += "</table>";
+    newDiv("results-table", "button-area", helpRequestsMenu);
+  
+  /*var helpRequestsMenu = "**** Current Help We Can Meet ****\n";
   for (var i = 1; i <= helpRequests.length; i++) {
     if (helpRequests[i - 1][5] != null) {
       helpRequestsMenu += i + "   -   " + findName(helpRequests[i - 1][0]) + " in " + findTown(helpRequests[i - 1][0]) + " placed a " + helpRequests[i - 1][3] + " priority ask for " + helpRequests[i - 1][2] + " " + helpRequests[i - 1][1] + " on " + helpRequests[i - 1][4] + " and it was met on " + helpRequests[i - 1][5] + "by " + helpRequests[i - 1][6] + ". \n";
     }
-  }
+  }*/
 }
 
 /* This function finds the name of a person using their ID 
