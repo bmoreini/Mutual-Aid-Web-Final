@@ -24,20 +24,50 @@ function displayWebMenu() {
     navbar.appendChild(newButton);
   }
 }
-function loadData() {
-  questionButton(playButton, "Load Persons", loadPersons, null, null);
+function loadDataPersons1() {
+  questionButton(playButton, "Load Persons", loadPersons2, null, null);
   instructions.innerHTML = "Paste the full dataset of the array you would like to load and then click the Load Persons";
 }
-function loadPersons() {
+function loadPersons2() {
+  removeButtons();
   var recordsAdded = 1;
   var arrayData = inputs.value;
   arrayData = JSON.parse(arrayData);
   recordsAdded = validatePersonsData(arrayData);
   if (recordsAdded > 0) {
     makeAlertBox("Persons array was added " + persons);
+    questionButton(playButton, "Load Needs", loadNeeds, null, null);
+    instructions.innerHTML = "Paste the full dataset of the array you would like to load and then click the Load Needs";
   }
   else {
-    makeAlertBox("There is a problem with your code. Please try again.", loadData);
+    makeAlertButton("There is a problem with your code. Please try again.", loadData);
+  }
+}
+function loadNeeds() {
+  var recordsAdded = 1;
+  var needsData = inputs.value;
+  needsData = JSON.parse(needsData);
+  recordsAdded = validateNeedsData(needsData);
+  if (recordsAdded > 0) {
+    makeAlertBox("Needs array was added " + needs);
+    resetTextBox();
+    instructions.innerHTML = "";
+    //questionButton(playButton, "Load Needs", loadNeeds, null, null);
+    //instructions.innerHTML = "Paste the full dataset of the array you would like to load and then click the Load Needs";
+  }
+  else {
+    makeAlertButton("There is a problem with your code. Please try again.", loadData);
+  }
+}
+function validateNeedsData(needsData) {
+  if (needsData[8] == "Financial support" && needsData[0] == "Shopping") {
+    makeAlertBox("Needs were added");
+    console.log(needs)
+    needs = needsData;
+    return needs.length;
+  }
+  else {
+    makeAlertBox("Some of the needs have been moved. Please try again");
   }
 }
 function validatePersonsData(arrayData) {
@@ -143,7 +173,7 @@ function addPerson() {
 */
 function validatePerson(personArray) {
   // check if array length is 6
-  alert("checking " +personArray);
+  alert("checking " + personArray);
   if (personArray.length != 6) {
     alert("Bad array length of " + personArray.length + " for: " + personArray);
     return false;
