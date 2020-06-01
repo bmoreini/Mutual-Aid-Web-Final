@@ -11,7 +11,7 @@ function logOut() {
 }
 
 function saveData() {
-  alert("You saved data!");
+  saveText(JSON.stringify(helpRequests), JSON.stringify(persons), JSON.stringify(needs), "helpRequests", "persons");
 }
 
 /* FUNCTIONS */
@@ -24,13 +24,41 @@ function displayWebMenu() {
     navbar.appendChild(newButton);
   }
 }
-
+function loadData() {
+  questionButton(playButton, "Load Persons", loadPersons, null, null);
+  instructions.innerHTML = "Paste the full dataset of the array you would like to load and then click the Load Persons";
+}
+function loadPersons() {
+  var recordsAdded = 1;
+  var arrayData = inputs.value;
+  arrayData = JSON.parse(arrayData);
+  recordsAdded = validatePersonsData(arrayData);
+  if (recordsAdded > 0) {
+    makeAlertBox("Persons array was added " + persons);
+  }
+  else {
+    makeAlertBox("There is a problem with your code. Please try again.", loadData);
+  }
+}
+function validatePersonsData(arrayData) {
+  console.log(arrayData);
+  for (let i = 0; i < arrayData.length; i++) {
+    if (validatePerson(arrayData[i]) != true) {
+      alert("Bad data in person " + i);
+      return 0;
+    }
+  }
+  persons = arrayData;
+  return arrayData.length;
+}
 /* Tests if a PersonID is unique in the Persons Array */
 function validateUniquePersonID(pID) {
   for (i = 0; i < persons.length; i++) {
     if (persons[i][0] == pID) {
-      return false;
+      //alert("Duplicate IDs: record" + [i]);
+      return 0;
     }
+    return false;
   }
   return true;
 }
@@ -47,7 +75,8 @@ function resetinputs() {
   * @return none
   */
 function logInSetup() {
-  inputArea.style.display="block";
+  removeButtons();
+  inputArea.style.display = "block";
   questionButton(playButton, "logIn", logIn, null, "Enter your ID in format #-10digitphone.");
   inputs.style.display = "block";
   validpID = false;
@@ -114,27 +143,30 @@ function addPerson() {
 */
 function validatePerson(personArray) {
   // check if array length is 6
+  alert("checking " +personArray);
   if (personArray.length != 6) {
-    makeAlertBox("Bad array length of " + personArray.length + " for: " + personArray);
+    alert("Bad array length of " + personArray.length + " for: " + personArray);
     return false;
   }
   // check if phone number is 10 digits
   else if (personArray[4].length != 10) {
-    makeAlertBox("Phone number is not 10 digits");
+    alert("Phone number is not 10 digits");
     return false;
   }
   else if (validateUniquePersonID(personArray[0]) == false) {
-    makeAlertBox(personArray[0] + " is not a unique ID!");
+    alert(personArray[0] + " is not a unique ID!");
     return false;
   }
   // check if email contains @
-  for (var letter = 0; letter < personArray[3].length; letter++) {
-    if (personArray[3][letter] == "@") {
-      return true;
+  else {
+    for (var letter = 0; letter < personArray[3].length; letter++) {
+      if (personArray[3][letter] == "@") {
+        return true;
+      }
     }
+    alert("Incorrect email address - no @ sign.");
+    return false;
   }
-  makeAlertBox("Incorrect email address - no @ sign.");
-  return false;
 }
 
 /* removeCommaSpaces looks for spaces after commas in a string and removes them 
@@ -158,33 +190,33 @@ function removeCommaSpaces(string) {
   */
 
 function viewNeeds() {
-  inputArea.style.display="none";
+  inputArea.style.display = "none";
   var needsMenu = "<h3>Current Needs</h3>";
   needsMenu += "<table id=\"results\">";
   col = 0;
-  for (var i = 0; i < needs.length; i+=2) {
+  for (var i = 0; i < needs.length; i += 2) {
     col++;
     needsMenu += "<tr>";
-    if (i+1 < needs.length) {
-      needsMenu += "<td><button type=\"submit\" onclick=\"viewNeedsChoice("+i+")\">"+ needs[i] + "</button></td>";
-      needsMenu += "<td><button type=\"submit\" onclick=\"viewNeedsChoice("+(i+1)+")\">"+ needs[i+1] + "</button></td>";
+    if (i + 1 < needs.length) {
+      needsMenu += "<td><button type=\"submit\" onclick=\"viewNeedsChoice(" + i + ")\">" + needs[i] + "</button></td>";
+      needsMenu += "<td><button type=\"submit\" onclick=\"viewNeedsChoice(" + (i + 1) + ")\">" + needs[i + 1] + "</button></td>";
     }
-  else {
-    needsMenu += "<td colspan=2><button type=\"submit\" onclick=\"viewNeedsChoice("+i+")\">"+ needs[i] + "</button></td>";
+    else {
+      needsMenu += "<td colspan=2><button type=\"submit\" onclick=\"viewNeedsChoice(" + i + ")\">" + needs[i] + "</button></td>";
+    }
+    needsMenu += "</tr>";
   }
-  needsMenu += "</tr>";
-}
-needsMenu += "</table>";
-needsMenu += "<p>Click on a need, or click \"Add New Need\" if your need is not on the menu.</p>";
-newDiv("results-table", "button-area", needsMenu);
-questionButton("noButton", "Add New Need", addNeedSetUp, null);
+  needsMenu += "</table>";
+  needsMenu += "<p>Click on a need, or click \"Add New Need\" if your need is not on the menu.</p>";
+  newDiv("results-table", "button-area", needsMenu);
+  questionButton("noButton", "Add New Need", addNeedSetUp, null);
 }
 
 
 /* View Needs Choice */
 function viewNeedsChoice(needID) {
   removeButtons();
-  inputArea.style.display="block";
+  inputArea.style.display = "block";
   helpRequest[1] = needs[needID];
   helpRequests.push(helpRequest);
   inputs.style.display = "none";
@@ -197,7 +229,7 @@ function viewNeedsChoice(needID) {
   * @return none
   */
 function addNeedSetUp() {
-  inputArea.style.display="block";
+  inputArea.style.display = "block";
   removeButtons();
   questionButton(playButton, "Submit Need", addNeedValidate, null, "Enter your need, in as few words as possible. Example: not \"A donut\" but \"Donuts\"");
 }
@@ -277,14 +309,14 @@ function requestHelpFinish() {
   * @return: none;
   */
 function viewHelpRequests() {
-  inputArea.style.display="none";
+  inputArea.style.display = "none";
   removeAlertBox();
   var helpRequestsMenu = "<h3>Current Help We Can Meet</h3>";
   helpRequestsMenu += "<table id=\"results\"><tr><th>Name</th><th>Town</th><th>Priority</th><th>Quantity</th><th>Need</th><th>Date</th></tr>";
   for (var i = 1; i <= helpRequests.length; i++) {
     if (helpRequests[i - 1][5] == null) {
       helpRequestsMenu += "<tr>";
-      helpRequestsMenu += "<td><button type=\"submit\" onclick=\"offerHelpConfirm("+i+")\">Pick</button>";
+      helpRequestsMenu += "<td><button type=\"submit\" onclick=\"offerHelpConfirm(" + i + ")\">Pick</button>";
       helpRequestsMenu += findName(helpRequests[i - 1][0]) + "</td>";
       helpRequestsMenu += "<td>" + findTown(helpRequests[i - 1][0]) + "</td>";
       helpRequestsMenu += "<td>" + helpRequests[i - 1][3] + "</td>";
@@ -316,7 +348,7 @@ function offerHelpConfirm(helpID) {
     if (helpID > 0 && helpID <= helpRequests.length) {
       helpID--;
       if (currentUser[0] != null) {
-       makeAlertBoxParam("You would like to help " + findName(helpRequests[helpID][0]) + " who placed a help request for " + helpRequests[helpID][1] + "?", completeHelpRequest, helpID);
+        makeAlertBoxParam("You would like to help " + findName(helpRequests[helpID][0]) + " who placed a help request for " + helpRequests[helpID][1] + "?", completeHelpRequest, helpID);
         makeAlertButton("Cancel", removeAlertBox);
       }
       else {
@@ -346,29 +378,29 @@ function completeHelpRequest(helpID) {
   * UPDATE-MBM
   */
 function viewMetRequests() {
-  inputArea.style.display="none";
+  inputArea.style.display = "none";
   var helpRequestsMenu = "<h3>Met Help Requests</h3>";
   helpRequestsMenu += "<table id=\"results\"><tr><th>Name</th><th>Town</th><th>Priority</th><th>Quantity</th><th>Need</th><th>Date</th><th>Date Met</th><th>Met By</th></tr>";
-    for (var i = 1; i <= helpRequests.length; i++) {
-      if (helpRequests[i - 1][5] != null) {
-        helpRequestsMenu += "<tr>";
-        helpRequestsMenu += "<td>" + findName(helpRequests[i - 1][0]) + "</td>";
-        helpRequestsMenu += "<td>" + findTown(helpRequests[i - 1][0]) + "</td>";
-        helpRequestsMenu += "<td>" + helpRequests[i - 1][3] + "</td>";
-        helpRequestsMenu += "<td>" + helpRequests[i - 1][2] + "</td>";
-        helpRequestsMenu += "<td>" + helpRequests[i - 1][1] +
-          "</td>";
-        helpRequestsMenu += "<td>" + helpRequests[i - 1][4] +
-          "</td>";
-        helpRequestsMenu += "<td>" + helpRequests[i - 1][5] +
-          "</td>";
-        helpRequestsMenu += "<td>" + findName(helpRequests[i - 1][6]) +
-          "</td>";
-        helpRequestsMenu += "</tr>";
-      }
+  for (var i = 1; i <= helpRequests.length; i++) {
+    if (helpRequests[i - 1][5] != null) {
+      helpRequestsMenu += "<tr>";
+      helpRequestsMenu += "<td>" + findName(helpRequests[i - 1][0]) + "</td>";
+      helpRequestsMenu += "<td>" + findTown(helpRequests[i - 1][0]) + "</td>";
+      helpRequestsMenu += "<td>" + helpRequests[i - 1][3] + "</td>";
+      helpRequestsMenu += "<td>" + helpRequests[i - 1][2] + "</td>";
+      helpRequestsMenu += "<td>" + helpRequests[i - 1][1] +
+        "</td>";
+      helpRequestsMenu += "<td>" + helpRequests[i - 1][4] +
+        "</td>";
+      helpRequestsMenu += "<td>" + helpRequests[i - 1][5] +
+        "</td>";
+      helpRequestsMenu += "<td>" + findName(helpRequests[i - 1][6]) +
+        "</td>";
+      helpRequestsMenu += "</tr>";
     }
-    helpRequestsMenu += "</table>";
-    newDiv("results-table", "button-area", helpRequestsMenu);
+  }
+  helpRequestsMenu += "</table>";
+  newDiv("results-table", "button-area", helpRequestsMenu);
 }
 
 /* This function finds the name of a person using their ID 
@@ -414,9 +446,3 @@ function logOut() {
   currentUser = [null, null, null];
   var helpRequest = [null, null, null, null, null, null, null];
 }
-
-function saveText(array, arrayName) {
-  alert("Clicking OK will save this array in downloads folder as " + arrayName + ".txt");
-  var fileData = new Blob([array], { type: "text/plain;" });
-  saveAs(fileData, arrayName + ".txt");
-};

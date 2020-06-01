@@ -120,3 +120,13 @@ function removeButtons() {
 function cleanKruft(){
   console.log("Clean up kruft!");
 }
+
+function saveText(array11, array22, array33, arrayName1, arrayName2) {
+  var array1 = array11;
+  var array2 = array22;
+  var array3 = array33;
+  var arrayNames = arrayName1+=arrayName2;
+  alert("Clicking OK will save this array in downloads folder as " +arrayNames+ ".txt");
+  var fileData = new Blob(["Help Requests: ", array1,"\n\nPersons: ", array2,"\n\nNeeds: ", array3], { type: "text/plain;" });
+  saveAs(fileData, arrayNames+ ".txt");
+};
