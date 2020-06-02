@@ -10,7 +10,6 @@ var needs = ["Shopping", "Grocery delivery", "Medical supplies", "Meal delivery"
 var menuItems = ["Load Data", "Log In", "Add Person", "View Needs", "Add Need", "Request Help", "Offer Help", "View Met Requests", "Log Out", "Save Data", "Quit"];
 
 // for testing
-var persons = [];
-//var persons = [["1-8008675309", "Bob", "Walter", "bob@yahoo.com", "0008675309", "Burlington"],["2-7357502412", "Napoleon", "Dynamite", "therose@yahoo.com", "8357502412", "Williston"]];
+var persons = [["1-8008675309", "Bob", "Walter", "bob@yahoo.com", "0008675309", "Burlington"],["2-7357502412", "Napoleon", "Dynamite", "therose@yahoo.com", "8357502412", "Williston"]];
 var helpRequests = [["1-0008675309", "Toilet Paper", "5", "1", "3/2/20", null, null], ["2-8357502412", "Steaks", "3", "2", "3/2/20", null, null]];
 

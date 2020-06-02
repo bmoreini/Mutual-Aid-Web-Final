@@ -3,7 +3,9 @@
 
 /* STUBS */
 function quit() {
-  alert("You quit!");
+  removeButtons();
+  resetTextBox();
+  instructions.innerHTML = "";
 }
 
 function logOut() {
@@ -24,10 +26,12 @@ function displayWebMenu() {
     navbar.appendChild(newButton);
   }
 }
+
 function loadDataPersons1() {
   questionButton(playButton, "Load Persons", loadPersons2, null, null);
   instructions.innerHTML = "Paste the full dataset of the array you would like to load and then click the Load Persons";
 }
+
 function loadPersons2() {
   removeButtons();
   var recordsAdded = 1;
@@ -40,9 +44,23 @@ function loadPersons2() {
     instructions.innerHTML = "Paste the full dataset of the array you would like to load and then click the Load Needs";
   }
   else {
-    makeAlertButton("There is a problem with your code. Please try again.", loadData);
+    makeAlertBox("There is a problem with your code. Please try again.");
+    makeAlertButton(" Try Again" , loadDataPersons1);
   }
 }
+
+function validatePersonsData(arrayData) {
+  console.log(arrayData);
+  for (let i = 0; i < arrayData.length; i++) {
+    if (validatePerson(arrayData[i]) != true) {
+      alert("Bad data in person " + i);
+      return 0;
+    }
+  }
+  persons = arrayData;
+  return arrayData.length;
+}
+
 function loadNeeds() {
   removeButtons();
   var recordsAdded = 1;
@@ -55,7 +73,18 @@ function loadNeeds() {
     instructions.innerHTML = "Paste the full dataset of the array you would like to load and then click the Load Help Requests";
   }
   else {
-    makeAlertButton("There is a problem with your code. Please try again.", loadData);
+    makeAlertBox("Some of the needs have been moved or there is a problem with your code. Please try again.");
+    makeAlertButton("Load Needs", loadNeeds);
+  }
+}
+
+function validateNeedsData(needsData) {
+  if (needsData[8] == "Financial support" && needsData[0] == "Shopping") {
+    needs = needsData;
+    return needs.length;
+  }
+  else {
+    return 0;
   }
 }
 
@@ -72,7 +101,8 @@ function loadHelpRequests(){
     makeAlertBox("All data has been loaded");
   }
   else {
-    makeAlertButton("There is a problem with your code. Please try again.", loadData);
+    makeAlertBox("There is a problem with your code. Please try again.");
+    makeAlertButton("Load Help Requests", loadHelpRequests);
   }
 }
 
@@ -114,36 +144,14 @@ function validateHelpRequest(helpRequestsData){
     return true;
   }
 }
-function validateNeedsData(needsData) {
-  if (needsData[8] == "Financial support" && needsData[0] == "Shopping") {
-    makeAlertBox("Needs were added");
-    console.log(needs)
-    needs = needsData;
-    return needs.length;
-  }
-  else {
-    makeAlertBox("Some of the needs have been moved. Please try again");
-  }
-}
-function validatePersonsData(arrayData) {
-  console.log(arrayData);
-  for (let i = 0; i < arrayData.length; i++) {
-    if (validatePerson(arrayData[i]) != true) {
-      alert("Bad data in person " + i);
-      return 0;
-    }
-  }
-  persons = arrayData;
-  return arrayData.length;
-}
+
+
 /* Tests if a PersonID is unique in the Persons Array */
 function validateUniquePersonID(pID) {
   for (i = 0; i < persons.length; i++) {
     if (persons[i][0] == pID) {
-      //alert("Duplicate IDs: record" + [i]);
-      return 0;
+      return false;
     }
-    return false;
   }
   return true;
 }
@@ -228,7 +236,6 @@ function addPerson() {
 */
 function validatePerson(personArray) {
   // check if array length is 6
-  alert("checking " + personArray);
   if (personArray.length != 6) {
     alert("Bad array length of " + personArray.length + " for: " + personArray);
     return false;
