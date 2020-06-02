@@ -35,7 +35,7 @@ function loadPersons2() {
   arrayData = JSON.parse(arrayData);
   recordsAdded = validatePersonsData(arrayData);
   if (recordsAdded > 0) {
-    makeAlertBox("Persons array was added " + persons);
+    makeAlertBox("Persons array was added");
     questionButton(playButton, "Load Needs", loadNeeds, null, null);
     instructions.innerHTML = "Paste the full dataset of the array you would like to load and then click the Load Needs";
   }
@@ -44,19 +44,74 @@ function loadPersons2() {
   }
 }
 function loadNeeds() {
+  removeButtons();
   var recordsAdded = 1;
   var needsData = inputs.value;
   needsData = JSON.parse(needsData);
   recordsAdded = validateNeedsData(needsData);
   if (recordsAdded > 0) {
-    makeAlertBox("Needs array was added " + needs);
-    resetTextBox();
-    instructions.innerHTML = "";
-    //questionButton(playButton, "Load Needs", loadNeeds, null, null);
-    //instructions.innerHTML = "Paste the full dataset of the array you would like to load and then click the Load Needs";
+    makeAlertBox("Needs array was added");
+    questionButton(playButton, "Load Help Requests", loadHelpRequests, null, null);
+    instructions.innerHTML = "Paste the full dataset of the array you would like to load and then click the Load Help Requests";
   }
   else {
     makeAlertButton("There is a problem with your code. Please try again.", loadData);
+  }
+}
+
+function loadHelpRequests(){
+  removeButtons();
+  var recordsAdded = 1;
+  var helpRequestsData = inputs.value;
+  helpRequestsData = JSON.parse(helpRequestsData);
+  recordsAdded = validateHelpRequestsData(helpRequestsData);
+  if (recordsAdded > 0) {
+    makeAlertBox("Help Requests array was added");
+    resetTextBox();
+    instructions.innerHTML = "";
+    makeAlertBox("All data has been loaded");
+  }
+  else {
+    makeAlertButton("There is a problem with your code. Please try again.", loadData);
+  }
+}
+
+function validateHelpRequestsData(helpRequestsData){
+  for (let i = 0; i < helpRequestsData; i++) {
+    if (validatePerson(helpRequestsData[i]) != true) {
+      alert("Bad data in helpRequest " + i);
+      return 0;
+    }
+  }
+  helpRequests = helpRequestsData;
+  return helpRequestsData.length;
+}
+
+function validateHelpRequest(helpRequestsData){
+  // check if array length is 6
+  alert("checking " + helpRequest);
+  if (personArray.length != 7) {
+    alert("Bad array length of " + helpRequest.length + " for: " + helpRequest);
+    return false;
+  }
+  // check if phone number is 10 digits
+  else if (needs.includes(helpRequest[1]) == false) {
+    alert("need is not in the needs list");
+    return false;
+  }
+  else if (validateUniquePersonID(helpRequest[0]) == false) {
+    for (i = 0; i < persons.length; i++){
+    let match = 0;
+    if (persons[i][0] == helpRequest[0]) match++;
+  }
+  if (match = 0){
+    alert(personArray[0] + " is not a unique ID!");
+    return false;
+  }
+  }
+  // check if email contains @
+  else {
+    return true;
   }
 }
 function validateNeedsData(needsData) {
